@@ -1,0 +1,93 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "title" : "Building",
+    "version" : "1.0.0"
+  },
+  "servers" : [ {
+    "url" : "https://virtserver.swaggerhub.com/nabiha7/Person/1.0.0",
+    "description" : "SwaggerHub API Auto Mocking"
+  } ],
+  "tags" : [ {
+    "name" : "ngsi-ld",
+    "description" : "NGSI-LD Linked-data Format\n"
+  } ],
+  "paths" : {
+    "/ngsi-ld/v1/entities" : {
+      "get" : {
+        "tags" : [ "ngsi-ld" ],
+        "description" : "Retrieve a set of entities which matches a specific query from an NGSI-LD system",
+        "parameters" : [ {
+          "name" : "type",
+          "in" : "query",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "Building" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/ld+json" : {
+                "examples" : {
+                  "keyvalues" : {
+                    "summary" : "Key-Values Pairs",
+                    "value" : [ {
+                      "$ref" : "https://fiware.github.io/tutorials.NGSI-LD/examples/building-keyValues.json"
+                    } ]
+                  },
+                  "normalized" : {
+                    "summary" : "Normalized NGSI-LD",
+                    "value" : [ {
+                      "$ref" : "https://fiware.github.io/tutorials.NGSI-LD/examples/building-normalized.jsonld"
+                    } ]
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "content" : {
+              "application/ld+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_400"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Building" : {
+        "$ref" : "#/Building"
+      },
+      "Categories" : {
+        "$ref" : "#/Categories"
+      },
+      "inline_response_400" : {
+        "required" : [ "type" ],
+        "type" : "object",
+        "properties" : {
+          "detail" : {
+            "type" : "string"
+          },
+          "title" : {
+            "type" : "string"
+          },
+          "type" : {
+            "type" : "string",
+            "format" : "uri"
+          }
+        }
+      }
+    }
+  }
+}
